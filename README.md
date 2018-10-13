@@ -14,6 +14,7 @@ This app is built with certain essential components:
  * Webpack 4 
  * Webpack cli
  * React Loadable
+ * React-google-maps
  * RechartsJS
  * Babel 7
  * React Material UI
@@ -26,6 +27,7 @@ This app is built with certain essential components:
  * Webpack v3 replaced by v4 for more optimized build on both local and production environment
  * Code Splitting is done to minimize initial app load from `2mb` to `400kb` by importing components dynamically
  * Complete App size is reduced from `3.4mb` to `1.02mb`
+ * `react-google-maps` added to track device location
  * All static files are cached with hashing strategy for better UX in production
  * Webpack Visulaizer is added to analyze production build for better app modules management
  * Recharts is used for readings' visuals

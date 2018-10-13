@@ -15,7 +15,7 @@ const styles = {
     fontSize: 14,
     fontWeight: 'bold',
     color: '#4e6a87',
-  }
+  },
 };
 
 const Count = ({ readingCount, classes }) => {

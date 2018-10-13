@@ -10,10 +10,15 @@ import Readings from './Readings';
 import SearchReading from './SearchReading';
 import FilterReadings from '../../helpers/FilterReadings';
 import Count from './Count';
+import MapLayout from '../Map/MapLayout';
 
 const styles = () => ({
   root: {
     flexGrow: 1,
+  },
+  leftAnchor: {
+    position: 'absolute',
+    left: '75%',
   },
 });
 
@@ -95,23 +100,32 @@ class Home extends Component {
     return (
       <Grid container className={classes.root} spacing={8}>
         <Grid item container xs={9} spacing={8}>
-          <SearchReading handleChange={this.handleChange} />
-          <FilterReadings
-            {...{ filter, inputValue, deviceReadings, updateState }}
-            onUpdateReadingCount={this.onUpdateReadingCount}
-          >
-            {({ readings }) => (
-              <Readings
-                onUpdateReadingCount={this.onUpdateReadingCount}
-                onUpdateList={this.onUpdateList}
-                {...{ inputValue, readings }}
-              />
-            )}
-          </FilterReadings>
+          <Grid item xs={12}>
+            <SearchReading handleChange={this.handleChange} />
+          </Grid>
+          <Grid item container xs={12} spacing={8}>
+            <FilterReadings
+              {...{ filter, inputValue, deviceReadings, updateState }}
+              onUpdateReadingCount={this.onUpdateReadingCount}
+            >
+              {({ readings }) => (
+                <Readings
+                  onUpdateReadingCount={this.onUpdateReadingCount}
+                  onUpdateList={this.onUpdateList}
+                  {...{ inputValue, readings }}
+                />
+              )}
+            </FilterReadings>
+          </Grid>
         </Grid>
         <Fade in timeout={2000}>
-          <Grid justify="center" container item xs={3}>
-            <Count {...{ readingCount }} />
+          <Grid className={classes.leftAnchor} item xs={3}>
+            <Grid item container xs={12} spacing={8}>
+              <Count {...{ readingCount }} />
+            </Grid>
+            <Grid item container xs={12} spacing={8}>
+              <MapLayout />
+            </Grid>
           </Grid>
         </Fade>
       </Grid>
