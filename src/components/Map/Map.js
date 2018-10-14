@@ -5,18 +5,18 @@ import { MarkerWithLabel } from 'react-google-maps/lib/components/addons/MarkerW
 import MapControl from './MapControl';
 import MapBottomPage from './MapBottomPage';
 import { labelStyling, lineCoordinatesStyling } from '../../utils/Constants';
-// import './MarkerWithLabelPatch'; //google maps v3 eperimental open bug resolution - unmounting markerWithLabel
 
 class Map extends Component {
 
   componentDidUpdate = () => {
-    const { latitude, longitude } = this.props;
-    const mapBounds = new google.maps.LatLngBounds();
-    mapBounds.extend(new google.maps.LatLng(52.511991, 13.383959));
-    latitude && longitude && mapBounds.extend(new google.maps.LatLng(latitude, longitude));
-    this.refs.map.fitBounds(mapBounds);
+    const { latitude, longitude, directions } = this.props;
+    if (Object.keys(directions).length) {
+      const mapBounds = new google.maps.LatLngBounds();
+      mapBounds.extend(new google.maps.LatLng(52.511991, 13.383959));
+      mapBounds.extend(new google.maps.LatLng(latitude, longitude));
+      this.refs.map.fitBounds(mapBounds);
+    }
   }
-
 
   render() {
     const { directions, latitude, longitude } = this.props;
@@ -47,10 +47,6 @@ class Map extends Component {
           labelAnchor={new google.maps.Point(75, 90)}
           labelStyle={labelStyling}
           defaultOpacity={1}
-        // icon={{
-        //   url: '/build/icon/markPin.svg',
-        //   anchor: new google.maps.Point(5, 58),
-        // }}
         >
           <div>
             Device Location
@@ -62,10 +58,6 @@ class Map extends Component {
           labelAnchor={new google.maps.Point(75, 90)}
           labelStyle={labelStyling}
           defaultOpacity={1}
-        // icon={{
-        //   url: '/build/icon/markPin.svg',
-        //   anchor: new google.maps.Point(5, 58),
-        // }}
         >
           <div>
             You're here
@@ -77,14 +69,6 @@ class Map extends Component {
           geodesic={false}
           options={lineCoordinatesStyling}
         />}
-
-        {/* <Polylines
-          lineCoordinates={lineCoordinates}
-        >
-          {({ polylines }) => (
-            polylines
-          )}
-        </Polylines> */}
       </GoogleMap>
     );
   }

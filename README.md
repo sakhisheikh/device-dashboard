@@ -13,6 +13,7 @@ This app is built with certain essential components:
  * ReactJS
  * Webpack 4 
  * Webpack cli
+ * Context API
  * React Loadable
  * React-google-maps
  * RechartsJS

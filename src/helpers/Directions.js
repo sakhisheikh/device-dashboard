@@ -10,8 +10,9 @@ class Directions extends Component {
 
   static getDerivedStateFromProps(nextProps, prevState) {
     if (
-      nextProps.latitude !== prevState.latitude &&
-      nextProps.longitude !== prevState.longitude
+      nextProps.isDirection &&
+      (nextProps.latitude !== prevState.latitude
+        && nextProps.longitude !== prevState.longitude)
     ) {
       return {
         latitude: nextProps.latitude,
@@ -21,15 +22,16 @@ class Directions extends Component {
     return null;
   }
 
-  componentDidUpdate(prevProps) {
-    const { latitude, longitude } = this.props;
-    if (prevProps.latitude !== latitude && prevProps.longitude !== longitude) {
+  componentDidUpdate() {
+    const { isDirection } = this.props;
+    if (isDirection) {
       this.onInitializeDirections();
     }
   }
 
   onInitializeDirections = () => {
     const { latitude, longitude } = this.state;
+    const { getDirections } = this.props;
 
     const DirectionsService = new google.maps.DirectionsService();
 
@@ -42,8 +44,12 @@ class Directions extends Component {
       (result, status) => {
         if (status === google.maps.DirectionsStatus.OK) {
           const overViewCoords = result.routes[0].overview_path;
-          this.setState({
-            directions: overViewCoords,
+          getDirections();
+          this.setState(state => {
+            return {
+              directions: overViewCoords,
+              isDirection: !state.isDirection,
+            };
           });
         } else {
           console.warn(`error fetching directions ${status}`);
@@ -65,6 +71,7 @@ Directions.propTypes = {
   children: PropTypes.any,
   latitude: PropTypes.any,
   longitude: PropTypes.any,
+  getDirections: PropTypes.func.isRequired,
 };
 
 export default Directions;

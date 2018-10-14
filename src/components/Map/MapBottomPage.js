@@ -3,6 +3,7 @@ import Button from '@material-ui/core/Button';
 import Grid from '@material-ui/core/Grid';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
+import MapContext from './MapContext';
 
 const styles = {
   root: {
@@ -29,13 +30,13 @@ class MapBottomPage extends Component {
     const { classes } = this.props;
     return (
       <Grid className={classes.root} container item xs={12}>
-        <Button
-          id="yalla"
-          onClick={this.getDirections}
-          className={classes.buttonStyle}
-        >
-          Get Directions
-        </Button>
+        <MapContext.Consumer>
+          {({ getDirections }) => (
+            <Button onClick={getDirections} className={classes.buttonStyle}>
+              Get Directions
+            </Button>
+          )}
+        </MapContext.Consumer>
       </Grid>
     );
   }
