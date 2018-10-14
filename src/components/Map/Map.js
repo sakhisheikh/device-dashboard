@@ -1,13 +1,25 @@
 /* eslint-disable */
 import React, { Component } from 'react';
-import { withGoogleMap, GoogleMap, Marker } from 'react-google-maps';
+import { withGoogleMap, GoogleMap, Polyline } from 'react-google-maps';
 import { MarkerWithLabel } from 'react-google-maps/lib/components/addons/MarkerWithLabel';
 import MapControl from './MapControl';
 import MapBottomPage from './MapBottomPage';
+import { labelStyling, lineCoordinatesStyling } from '../../utils/Constants';
 // import './MarkerWithLabelPatch'; //google maps v3 eperimental open bug resolution - unmounting markerWithLabel
 
 class Map extends Component {
+
+  componentDidUpdate = () => {
+    const { latitude, longitude } = this.props;
+    const mapBounds = new google.maps.LatLngBounds();
+    mapBounds.extend(new google.maps.LatLng(52.511991, 13.383959));
+    latitude && longitude && mapBounds.extend(new google.maps.LatLng(latitude, longitude));
+    this.refs.map.fitBounds(mapBounds);
+  }
+
+
   render() {
+    const { directions, latitude, longitude } = this.props;
     return (
       <GoogleMap
         defaultZoom={11}
@@ -33,11 +45,7 @@ class Map extends Component {
         <MarkerWithLabel
           position={new google.maps.LatLng(52.511991, 13.383959)}
           labelAnchor={new google.maps.Point(75, 90)}
-          labelStyle={{
-            clear: "both", display: "inline-block", backgroundColor: "#4e6a87", fontWeight: '500',
-            color: "#FFFFFF", boxShadow: "0 6px 8px 0 rgba(63,63,63,0.11)", borderRadius: "30px",
-            padding: "6px 16px", whiteSpace: "nowrap", width: "120px", textAlign: "center"
-          }}
+          labelStyle={labelStyling}
           defaultOpacity={1}
         // icon={{
         //   url: '/build/icon/markPin.svg',
@@ -48,6 +56,27 @@ class Map extends Component {
             Device Location
       </div>
         </MarkerWithLabel>
+
+        {latitude && longitude && <MarkerWithLabel
+          position={new google.maps.LatLng(latitude, longitude)}
+          labelAnchor={new google.maps.Point(75, 90)}
+          labelStyle={labelStyling}
+          defaultOpacity={1}
+        // icon={{
+        //   url: '/build/icon/markPin.svg',
+        //   anchor: new google.maps.Point(5, 58),
+        // }}
+        >
+          <div>
+            You're here
+      </div>
+        </MarkerWithLabel>}
+
+        {directions && <Polyline
+          path={directions}
+          geodesic={false}
+          options={lineCoordinatesStyling}
+        />}
 
         {/* <Polylines
           lineCoordinates={lineCoordinates}

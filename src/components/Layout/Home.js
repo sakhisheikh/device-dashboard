@@ -1,6 +1,5 @@
 /* eslint-disable react/no-array-index-key, no-console */
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
 // Material-UI
 import { withStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';

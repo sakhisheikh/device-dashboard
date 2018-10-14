@@ -22,6 +22,13 @@ This app is built with certain essential components:
  * JSS (CSS in JS)
  * HMR (Hot Module Replacement)
 
+## `Advance React Patterns`
+
+These are the few most powerful react patterns are used while building this app.
+ * `Render Props`
+ * `State Reducers`
+
+
 ## `Features`
 
  * Webpack v3 replaced by v4 for more optimized build on both local and production environment
@@ -32,7 +39,6 @@ This app is built with certain essential components:
  * Webpack Visulaizer is added to analyze production build for better app modules management
  * Recharts is used for readings' visuals
  * JSS is used with [Material-UI](https://github.com/mui-org/material-ui) for modular css to avoid main thread blocking
- * `Render Props` one of the most powerful react patterns is used in app business logic
  * Webpack config is seperated and kept very modular to adhere with app requirements for large scale in future
  * All routes are protected
  * All scripts are run by webpack-cli
@@ -41,11 +47,18 @@ This app is built with certain essential components:
  * Redux will be added for app future implentation
  * Unit tests are covered for app business logic components
 
+## `Additional Functionalities`
+
+ * [Auth0](https://auth0.com/) Integration
+ * Google maps integration to get drections to device location
+
 ## `Get Started`
 
 To install dependencies: ```npm install``` | ```yarn```
 
 To run the server locally: ```npm run start``` | ```yarn start```
+
+To create production build: ```npm run prebuild``` | ```yarn prebuild```
 
 ## Notes
 * Local environment is configured with `port 3001` to make sure [Auth0](https://auth0.com/) authentcation callback sends response on this port.

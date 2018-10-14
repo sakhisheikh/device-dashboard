@@ -12,10 +12,7 @@ function SearchReading({ handleChange }) {
       placeholder="Search reading by name"
       fullWidth
       margin="normal"
-      variant="filled"
-      InputLabelProps={{
-        shrink: true,
-      }}
+      variant="outlined"
     />
   );
 }

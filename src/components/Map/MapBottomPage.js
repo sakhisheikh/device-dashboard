@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import Button from '@material-ui/core/Button';
 import Grid from '@material-ui/core/Grid';
+import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 
 const styles = {
@@ -20,23 +21,6 @@ const styles = {
 };
 
 class MapBottomPage extends Component {
-  // renderComp = () => {
-  //   switch (this.props.currentScreen) {
-  //     case 'Confirm':
-  //       return <ConfirmTrip setNextScreen={this.setNextScreen} bookRide={this.bookRide} />;
-  //       break;
-  //     case 'Track':
-  //       return <TripTracking setNextScreen={this.setNextScreen} />;
-  //       break;
-  //     case 'Complete':
-  //       return <TripArrived setNextScreen={this.setNextScreen} />;
-  //       break;
-  //     default:
-  //       return <ConfirmTrip setNextScreen={this.setNextScreen} bookRide={this.bookRide} />;
-  //       break;
-  //   }
-  // };
-
   getDirections = () => {
     return true;
   };
@@ -56,5 +40,9 @@ class MapBottomPage extends Component {
     );
   }
 }
+
+MapBottomPage.propTypes = {
+  classes: PropTypes.object.isRequired,
+};
 
 export default withStyles(styles)(MapBottomPage);

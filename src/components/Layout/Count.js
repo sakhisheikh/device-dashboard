@@ -21,7 +21,7 @@ const styles = {
 const Count = ({ readingCount, classes }) => {
   return Object.keys(readingCount).map((key, i) => {
     return (
-      <Grid key={i} item xs={6}>
+      <Grid key={i.toString()} item xs={6}>
         <div align="center">
           <Circle align="center" fontSize={40} value={readingCount[key]} />
         </div>

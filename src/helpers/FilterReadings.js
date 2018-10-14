@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import * as SearchUtils from '../utils/matchSorter';
+import * as SearchUtils from '../utils/MatchSorter';
 
 class FilterReadings extends Component {
   state = {
@@ -26,9 +26,8 @@ class FilterReadings extends Component {
     const { inputValue } = this.props;
     if (prevProps.inputValue !== inputValue || updateState) {
       const { deviceReadings, onUpdateReadingCount } = this.props;
-      const { inputValue } = this.props;
       // Perform some operation here
-      const filterdReadings = SearchUtils.matchSorter({
+      const filterdReadings = SearchUtils.MatchSorter({
         inputValue,
         deviceReadings,
       });
