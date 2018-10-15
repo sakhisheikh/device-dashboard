@@ -10,6 +10,9 @@ import SearchReading from './SearchReading';
 import FilterReadings from '../../helpers/FilterReadings';
 import Count from './Count';
 import MapLayout from '../Map/MapLayout';
+import ReadingsDialog from './ReadingsDialog';
+import ReadingContext from './context/ReadingsContext';
+import ReadingsStat from './readings/ReadingsStat';
 
 const styles = () => ({
   root: {
@@ -18,6 +21,10 @@ const styles = () => ({
   leftAnchor: {
     position: 'absolute',
     left: '75%',
+  },
+  mapLayout: {
+    border: '2px solid orange',
+    borderRadius: '8px',
   },
 });
 
@@ -28,6 +35,7 @@ class Home extends Component {
     inputValue: '',
     readingCount: { active: 0, inactive: 0 },
     updateState: false,
+    isReadingDialog: false,
   };
 
   componentDidMount() {
@@ -86,6 +94,19 @@ class Home extends Component {
     });
   };
 
+  getReadingsStat = () => {
+    console.log('GET READINGS STAT');
+    this.toggleDialog();
+  };
+
+  toggleDialog = () => {
+    this.setState(state => {
+      return {
+        isReadingDialog: !state.isReadingDialog,
+      };
+    });
+  };
+
   render() {
     const {
       deviceReadings,
@@ -93,41 +114,66 @@ class Home extends Component {
       filter,
       readingCount,
       updateState,
+      isReadingDialog,
     } = this.state;
     const { classes } = this.props;
 
     return (
-      <Grid container className={classes.root} spacing={8}>
-        <Grid item container xs={9} spacing={8}>
-          <Grid item xs={12}>
-            <SearchReading handleChange={this.handleChange} />
+      <React.Fragment>
+        <Grid container className={classes.root} spacing={8}>
+          <Grid item container xs={9} spacing={8}>
+            <Grid item xs={12}>
+              <SearchReading handleChange={this.handleChange} />
+            </Grid>
+            <Grid item container xs={12} spacing={8}>
+              <FilterReadings
+                {...{ filter, inputValue, deviceReadings, updateState }}
+                onUpdateReadingCount={this.onUpdateReadingCount}
+              >
+                {({ readings }) => (
+                  <Readings
+                    onUpdateReadingCount={this.onUpdateReadingCount}
+                    onUpdateList={this.onUpdateList}
+                    {...{ inputValue, readings }}
+                  />
+                )}
+              </FilterReadings>
+            </Grid>
           </Grid>
-          <Grid item container xs={12} spacing={8}>
-            <FilterReadings
-              {...{ filter, inputValue, deviceReadings, updateState }}
-              onUpdateReadingCount={this.onUpdateReadingCount}
+
+          <Fade in timeout={2000}>
+            <Grid className={classes.leftAnchor} item xs={3}>
+              <Grid item container xs={12} spacing={8}>
+                <Count {...{ readingCount }} />
+              </Grid>
+              <Grid
+                className={classes.mapLayout}
+                item
+                container
+                xs={12}
+                spacing={8}
+              >
+                <MapLayout />
+              </Grid>
+            </Grid>
+          </Fade>
+        </Grid>
+
+        <ReadingContext.Consumer>
+          {({ isReadingsDialog, handleStats }) => (
+            <ReadingsStat
+              {...{ deviceReadings, handleStats, isReadingsDialog }}
             >
-              {({ readings }) => (
-                <Readings
-                  onUpdateReadingCount={this.onUpdateReadingCount}
-                  onUpdateList={this.onUpdateList}
-                  {...{ inputValue, readings }}
+              {({ readingsStat }) => (
+                <ReadingsDialog
+                  toggleDialog={this.toggleDialog}
+                  {...{ readingsStat, isReadingsDialog }}
                 />
               )}
-            </FilterReadings>
-          </Grid>
-        </Grid>
-        <Fade in timeout={2000}>
-          <Grid className={classes.leftAnchor} item xs={3}>
-            <Grid item container xs={12} spacing={8}>
-              <Count {...{ readingCount }} />
-            </Grid>
-            <Grid item container xs={12} spacing={8}>
-              <MapLayout />
-            </Grid>
-          </Grid>
-        </Fade>
-      </Grid>
+            </ReadingsStat>
+          )}
+        </ReadingContext.Consumer>
+      </React.Fragment>
     );
   }
 }

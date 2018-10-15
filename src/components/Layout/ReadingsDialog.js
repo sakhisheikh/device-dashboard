@@ -27,63 +27,33 @@ function Transition(props) {
   return <Slide direction="up" {...props} />;
 }
 
-class ReadingsDialog extends React.Component {
-  state = {
-    open: false,
-  };
-
-  handleClickOpen = () => {
-    this.setState({ open: true });
-  };
-
-  handleClose = () => {
-    this.setState({ open: false });
-  };
-
-  render() {
-    const { classes } = this.props;
-    return (
-      <div>
-        <Button onClick={this.handleClickOpen}>Open full-screen dialog</Button>
-        <Dialog
-          fullScreen
-          open={this.state.open}
-          onClose={this.handleClose}
-          TransitionComponent={Transition}
-        >
-          <AppBar className={classes.appBar}>
-            <Toolbar>
-              <IconButton
-                color="inherit"
-                onClick={this.handleClose}
-                aria-label="Close"
-              >
-                <CloseIcon />
-              </IconButton>
-              <Typography variant="h6" color="inherit" className={classes.flex}>
-                Sound
-              </Typography>
-              <Button color="inherit" onClick={this.handleClose}>
-                save
-              </Button>
-            </Toolbar>
-          </AppBar>
-          <List>
-            <ListItem button>
-              <ListItemText primary="Phone ringtone" secondary="Titania" />
-            </ListItem>
-            <Divider />
-            <ListItem button>
-              <ListItemText
-                primary="Default notification ringtone"
-                secondary="Tethys"
-              />
-            </ListItem>
-          </List>
-        </Dialog>
-      </div>
-    );
-  }
+function ReadingsDialog({ classes, toggleDialog, isReadingsDialog }) {
+  return (
+    <Dialog fullScreen open={isReadingsDialog} TransitionComponent={Transition}>
+      <AppBar className={classes.appBar}>
+        <Toolbar>
+          <IconButton color="inherit" onClick={toggleDialog} aria-label="Close">
+            <CloseIcon />
+          </IconButton>
+          <Typography variant="h6" color="inherit" className={classes.flex}>
+            Device Readings Statistics
+          </Typography>
+        </Toolbar>
+      </AppBar>
+      <List>
+        <ListItem button>
+          <ListItemText primary="Phone ringtone" secondary="Titania" />
+        </ListItem>
+        <Divider />
+        <ListItem button>
+          <ListItemText
+            primary="Default notification ringtone"
+            secondary="Tethys"
+          />
+        </ListItem>
+      </List>
+    </Dialog>
+  );
 }
 
 ReadingsDialog.propTypes = {

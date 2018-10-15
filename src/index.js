@@ -3,21 +3,27 @@ import ReactDOM from 'react-dom';
 import './styles.scss';
 import { BrowserRouter } from 'react-router-dom';
 import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
+import { Provider } from 'react-redux';
 import App from './App';
+
+// Redux Store Configuration
+import store from './store';
 
 const theme = createMuiTheme({
   typography: {
     useNextVariants: true,
     suppressDeprecationWarnings: true,
-  }
+  },
 });
 
 function render(Component) {
   ReactDOM.render(
     <MuiThemeProvider theme={theme}>
-      <BrowserRouter>
-        <Component />
-      </BrowserRouter>
+      <Provider store={store}>
+        <BrowserRouter>
+          <Component />
+        </BrowserRouter>
+      </Provider>
     </MuiThemeProvider>,
     document.getElementById('root'),
   );
