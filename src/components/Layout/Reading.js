@@ -138,13 +138,13 @@ class Reading extends Component {
                 secondary={new Date(timestamp).toLocaleTimeString()}
               />
             </ListItem>
-            <Typography align="center">
+            <div align="center">
               {isLoading ? (
                 <CircularProgress className={classes.loader} />
               ) : (
                   <FormControlLabel control={CustomCheckbox} label="Active" />
                 )}
-            </Typography>
+            </div>
           </CardContent>
         </Card>
         <ReadingAlert

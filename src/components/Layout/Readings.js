@@ -1,14 +1,18 @@
 import React, { Component } from 'react';
 import Snackbar from '@material-ui/core/Snackbar';
+import SnackbarContent from '@material-ui/core/SnackbarContent';
 import Grid from '@material-ui/core/Grid';
 import { withStyles } from '@material-ui/core/styles';
 import Fade from '@material-ui/core/Fade';
 import Reading from './Reading';
 import * as DEVICE from '../../api/device';
 
-const styles = () => ({
+const styles = theme => ({
   root: {
     flexGrow: 1,
+  },
+  snackBar: {
+    backgroundColor: theme.palette.error.dark,
   },
 });
 
@@ -61,7 +65,7 @@ class Readings extends Component {
 
   render() {
     const { isLoading, isSnackbarOpen, snackbarMessage } = this.state;
-    const { readings } = this.props;
+    const { readings, classes } = this.props;
 
     const allList = readings.map((device, i) => (
       <Fade key={i.toString()} in timeout={1000}>
@@ -86,8 +90,13 @@ class Readings extends Component {
           open={isSnackbarOpen}
           autoHideDuration={2000}
           onClose={this.handleCloseSnackbar}
-          message={<span id="message-id">{snackbarMessage}</span>}
-        />
+        >
+          <SnackbarContent
+            className={classes.snackBar}
+            aria-describedby="client-snackbar"
+            message={<span id="message-id">{snackbarMessage}</span>}
+          />
+        </Snackbar>
       </React.Fragment>
     );
   }

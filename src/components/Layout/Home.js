@@ -95,7 +95,6 @@ class Home extends Component {
   };
 
   getReadingsStat = () => {
-    console.log('GET READINGS STAT');
     this.toggleDialog();
   };
 
