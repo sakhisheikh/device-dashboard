@@ -35,32 +35,37 @@ class MapLayout extends Component {
     this.setState({ error });
   };
 
-  getDirections = () => {
-    console.log("Direction Called");
-    this.setState(state => {
-      return {
-        isDirection: !state.isDirection,
-      }
-    })
+  onDirectionsAvailable = ({ isDirection }) => {
+    this.toggleDirectionState(isDirection)
+  };
+
+  getDirections = ({ isDirection }) => () => {
+    this.toggleDirectionState(isDirection)
+  };
+
+  toggleDirectionState = isDirection => {
+    this.setState({
+      isDirection,
+    });
   }
 
   render() {
     const { latitude, longitude, isDirection } = this.state;
-    console.log("DIRECTION IN RENDER", this.state.isDirection)
     return (
-      <MapContext.Provider value={{ getDirections: this.getDirections }}>
-        <Directions
-          {...{ latitude, longitude, isDirection }} getDirections={this.getDirections}
-        >
-          {(({ directions }) => (
+
+      <Directions
+        {...{ latitude, longitude, isDirection }} onDirectionsAvailable={this.onDirectionsAvailable}
+      >
+        {(({ directions }) => (
+          <MapContext.Provider value={{ getDirections: this.getDirections, directions }}>
             <Map
               containerElement={<div style={{ height: '500px', width: '100%', borderRadius: '8px' }} />}
               mapElement={<div style={{ height: `100%`, borderRadius: '8px' }} />}
               {...{ directions, latitude, longitude, isDirection }}
             />
-          ))}
-        </Directions>
-      </MapContext.Provider>
+          </MapContext.Provider>
+        ))}
+      </Directions >
     );
 
   }

@@ -9,7 +9,6 @@ class FilterReadings extends Component {
   };
 
   static getDerivedStateFromProps(nextProps, prevState) {
-    console.log("UPDATE", nextProps.updateState)
     if (
       nextProps.inputValue !== prevState.inputValue || nextProps.updateState
     ) {

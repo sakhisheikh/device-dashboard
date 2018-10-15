@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import { Component } from 'react';
 import PropTypes from 'prop-types';
 
 class Directions extends Component {
@@ -31,7 +31,7 @@ class Directions extends Component {
 
   onInitializeDirections = () => {
     const { latitude, longitude } = this.state;
-    const { getDirections } = this.props;
+    const { onDirectionsAvailable } = this.props;
 
     const DirectionsService = new google.maps.DirectionsService();
 
@@ -44,7 +44,7 @@ class Directions extends Component {
       (result, status) => {
         if (status === google.maps.DirectionsStatus.OK) {
           const overViewCoords = result.routes[0].overview_path;
-          getDirections();
+          onDirectionsAvailable({ isDirection: false });
           this.setState(state => {
             return {
               directions: overViewCoords,
@@ -71,7 +71,8 @@ Directions.propTypes = {
   children: PropTypes.any,
   latitude: PropTypes.any,
   longitude: PropTypes.any,
-  getDirections: PropTypes.func.isRequired,
+  isDirection: PropTypes.any,
+  onDirectionsAvailable: PropTypes.func.isRequired,
 };
 
 export default Directions;

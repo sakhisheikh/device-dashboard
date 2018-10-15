@@ -1,7 +1,14 @@
 import React from 'react';
 import { PieChart, Pie } from 'recharts';
+import { withStyles } from '@material-ui/core/styles';
 
 const chartData = [{ name: 'score', value: 100, fill: 'orange' }];
+
+const styles = {
+  animate: {
+    animation: 'fade-in 2000ms infinite',
+  },
+};
 
 function Circle({ value, unit = '', fontSize = 15 }) {
   return (
@@ -17,12 +24,15 @@ function Circle({ value, unit = '', fontSize = 15 }) {
         outerRadius="110%"
         stroke="none"
       />
+
       <g>
         <text
           x="50%"
           y="50%"
           dy={8}
-          style={{ fontSize }}
+          style={{
+            fontSize,
+          }}
           textAnchor="middle"
           fill="#4e6a87"
         >
@@ -33,4 +43,4 @@ function Circle({ value, unit = '', fontSize = 15 }) {
   );
 }
 
-export default Circle;
+export default withStyles(styles)(Circle);

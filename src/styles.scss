@@ -9,3 +9,14 @@ body, html {
 .gm-style {
   border-radius: 8px;
 }
+
+.animate-reading:empty {
+  animation: hideshow 2s infinite;
+}
+
+@keyframes hideshow {
+  0% { opacity: 0.5; }
+  25% { opacity: 0.7; }
+  60% { opacity: 0.85; }
+  100% { opacity: 1; }
+} 
