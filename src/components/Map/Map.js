@@ -50,7 +50,7 @@ class Map extends Component {
         >
           <div>
             Device Location
-      </div>
+          </div>
         </MarkerWithLabel>
 
         {latitude && longitude && <MarkerWithLabel

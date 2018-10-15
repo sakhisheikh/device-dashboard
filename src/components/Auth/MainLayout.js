@@ -1,3 +1,4 @@
+/* eslint-disable */
 import React, { Component } from 'react';
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
@@ -6,13 +7,14 @@ import { withRouter } from 'react-router-dom';
 import Drawer from '@material-ui/core/Drawer';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
+import IconButton from '@material-ui/core/IconButton';
+import MenuIcon from '@material-ui/icons/Menu';
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
 import ProtectedRoutes from './ProtectedRoutes';
 import authClient from './Auth';
 import Loading from '../Loaders/Loading';
-
-const drawerWidth = 0;
+import DashboardOptions from '../Layout/DashboardOptions';
 
 const AUTH_GRANT = {
   signIn: () => {
@@ -40,17 +42,10 @@ const styles = theme => ({
   },
   appBar: {
     background: 'orange',
-    width: `calc(100% - ${drawerWidth}px)`,
-  },
-  'appBar-left': {
-    marginLeft: drawerWidth,
-  },
-  'appBar-right': {
-    marginRight: drawerWidth,
+    width: '100%',
   },
   drawerPaper: {
     position: 'relative',
-    width: drawerWidth,
   },
   toolbar: theme.mixins.toolbar,
   content: {
@@ -66,6 +61,7 @@ class MainLayout extends Component {
     anchor: 'left',
     isLoading: false,
     isAuthenticated: false,
+    isDrawerOpen: false,
   };
 
   componentDidMount() {
@@ -89,26 +85,28 @@ class MainLayout extends Component {
     AUTH_GRANT[access]();
   };
 
+  toggleDrawer = ({ isDrawerOpen }) => () => {
+    this.setState({ isDrawerOpen });
+  }
+
   render() {
     const { classes } = this.props;
-    const { anchor, isAuthenticated, isLoading } = this.state;
+    const { anchor, isAuthenticated, isLoading, isDrawerOpen } = this.state;
     const access =
       isAuthenticated && authClient.isAuthenticated() ? 'signOut' : 'signIn';
     const authenticated =
       isAuthenticated && authClient.isAuthenticated() ? 'Sign Out' : 'Sign In';
 
-    // const drawer = (
-    //   <Drawer
-    //     variant="permanent"
-    //     classes={{
-    //       paper: classes.drawerPaper,
-    //     }}
-    //     anchor={anchor}
-    //   >
-    //     <div className={classes.toolbar} />
-    //     <NotesOptions />
-    //   </Drawer>
-    // );
+    const drawer = (
+      <Drawer
+        open={isDrawerOpen}
+        onClick={this.toggleDrawer({ isDrawerOpen: false })}
+        onKeyDown={this.toggleDrawer({ isDrawerOpen: false })}>
+        <div tabIndex={0} role="button">
+          <DashboardOptions className={classes.sideList} />
+        </div>
+      </Drawer>
+    );
 
     return isLoading ? (
       <Loading />
@@ -120,6 +118,14 @@ class MainLayout extends Component {
               className={classNames(classes.appBar, classes[`appBar-${anchor}`])}
             >
               <Toolbar>
+                <IconButton
+                  color="inherit"
+                  aria-label="Open drawer"
+                  onClick={this.toggleDrawer({ isDrawerOpen: true })}
+                  className={classes.menuButton}
+                >
+                  <MenuIcon />
+                </IconButton>
                 <Typography
                   className={classes.grow}
                   variant="title"
@@ -133,7 +139,7 @@ class MainLayout extends Component {
                 </Button>
               </Toolbar>
             </AppBar>
-            {/* {drawer} */}
+            {drawer}
             <main className={classes.content}>
               <div className={classes.toolbar} />
               {isAuthenticated ? (
