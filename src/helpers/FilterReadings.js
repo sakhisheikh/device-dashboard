@@ -1,10 +1,10 @@
-import React, { Component } from 'react';
+import { Component } from 'react';
 import * as SearchUtils from '../utils/MatchSorter';
 
 class FilterReadings extends Component {
   state = {
-    inputValue: null,
-    readings: [],
+    inputValue: '',
+    filterReadings: [],
     updateState: false,
   };
 
@@ -14,7 +14,7 @@ class FilterReadings extends Component {
     ) {
       return {
         inputValue: nextProps.inputValue,
-        readings: nextProps.deviceReadings,
+        filterReadings: nextProps.readings,
         updateState: nextProps.updateState,
       };
     }
@@ -25,16 +25,16 @@ class FilterReadings extends Component {
     const { updateState } = this.state;
     const { inputValue } = this.props;
     if (prevProps.inputValue !== inputValue || updateState) {
-      const { deviceReadings, onUpdateReadingCount } = this.props;
+      const { readings, onUpdateReadingCount } = this.props;
       // Perform some operation here
-      const filterdReadings = SearchUtils.MatchSorter({
+      const filteredReadings = SearchUtils.MatchSorter({
         inputValue,
-        deviceReadings,
+        readings,
       });
-      onUpdateReadingCount(filterdReadings);
+      onUpdateReadingCount(filteredReadings);
       this.setState(state => {
         return {
-          readings: filterdReadings,
+          filterReadings: filteredReadings,
           updateState: !state.updateState,
         };
       });
@@ -42,10 +42,10 @@ class FilterReadings extends Component {
   }
 
   render() {
-    const { readings } = this.state;
-    const { children, inputValue, deviceReadings } = this.props;
+    const { filterReadings } = this.state;
+    const { children, inputValue, readings } = this.props;
     return children({
-      readings: inputValue ? readings : deviceReadings,
+      filterReadings: inputValue ? filterReadings : readings,
     });
   }
 }

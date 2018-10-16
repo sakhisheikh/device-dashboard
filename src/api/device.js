@@ -9,7 +9,7 @@ export const getDeviceReadings = () => {
   })
     .then(response => {
       // handle success
-      return response.data;
+      return response.data.data;
     })
     .catch(error => {
       throw error;

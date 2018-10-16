@@ -4,6 +4,7 @@ import React, { Component } from 'react';
 import { withStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 import Fade from '@material-ui/core/Fade';
+import { connect } from 'react-redux';
 import * as DEVICE from '../../api/device';
 import Readings from './Readings';
 import SearchReading from './SearchReading';
@@ -13,6 +14,7 @@ import MapLayout from '../Map/MapLayout';
 import ReadingsDialog from './ReadingsDialog';
 import ReadingContext from './context/ReadingsContext';
 import ReadingsStat from './readings/ReadingsStat';
+import actions from '../../actions/index';
 
 const styles = () => ({
   root: {
@@ -30,28 +32,50 @@ const styles = () => ({
 
 class Home extends Component {
   state = {
-    deviceReadings: [],
-    filter: 'name',
+    readings: [],
     inputValue: '',
     readingCount: { active: 0, inactive: 0 },
     updateState: false,
-    isReadingDialog: false,
+    externalData: false,
   };
 
-  componentDidMount() {
-    DEVICE.getDeviceReadings().then(res => {
-      const { data } = res;
-      this.setState(
-        {
-          deviceReadings: data,
-        },
-        () => {
-          const { deviceReadings } = this.state;
-          this.onUpdateReadingCount(deviceReadings);
-        },
-      );
-    });
+  static getDerivedStateFromProps(nextProps, prevState) {
+    if (nextProps.readings.length && !prevState.externalData) {
+      return {
+        readings: nextProps.readings,
+        externalData: true,
+      };
+    }
+    return null;
   }
+
+  componentDidMount() {
+    this.onUpdateReadingCount(this.props.readings);
+  }
+
+  // componentDidUpdate(prevProps, prevState) {
+  //   console.log("#####")
+  //   if (prevState.externalData) {
+  //     console.log("IM INSDE")
+  //     this.onUpdateReadingCount(prevProps.readings);
+  //     this.setState({ externalData: false });
+  //   }
+  // }
+
+  // componentDidMount() {
+  //   DEVICE.getDeviceReadings().then(res => {
+  //     const { data } = res;
+  //     this.setState(
+  //       {
+  //         deviceReadings: data,
+  //       },
+  //       () => {
+  //         const { deviceReadings } = this.state;
+  //         this.onUpdateReadingCount(deviceReadings);
+  //       },
+  //     );
+  //   });
+  // }
 
   handleChange = event => {
     const eventVal = event.target.value.trim();
@@ -61,15 +85,15 @@ class Home extends Component {
   };
 
   onUpdateList = (name, checked) => {
-    const { deviceReadings } = this.state;
-    const list = deviceReadings.map(reading => {
+    const { readings, setReadings } = this.props;
+    const list = readings.map(reading => {
       if (reading.name === name) {
         return { ...reading, active: checked };
       }
       return reading;
     });
+    setReadings(list); // dispatch redux action
     this.setState({
-      deviceReadings: list,
       updateState: true,
     });
   };
@@ -88,7 +112,7 @@ class Home extends Component {
     );
     this.setState(state => {
       return {
-        updateState: !state.updateState,
+        updateState: false,
         readingCount: { active, inactive },
       };
     });
@@ -110,12 +134,10 @@ class Home extends Component {
     const {
       deviceReadings,
       inputValue,
-      filter,
       readingCount,
       updateState,
-      isReadingDialog,
     } = this.state;
-    const { classes } = this.props;
+    const { classes, readings } = this.props;
 
     return (
       <React.Fragment>
@@ -126,14 +148,14 @@ class Home extends Component {
             </Grid>
             <Grid item container xs={12} spacing={8}>
               <FilterReadings
-                {...{ filter, inputValue, deviceReadings, updateState }}
+                {...{ inputValue, readings, updateState }}
                 onUpdateReadingCount={this.onUpdateReadingCount}
               >
-                {({ readings }) => (
+                {({ filterReadings }) => (
                   <Readings
                     onUpdateReadingCount={this.onUpdateReadingCount}
                     onUpdateList={this.onUpdateList}
-                    {...{ inputValue, readings }}
+                    {...{ inputValue, filterReadings }}
                   />
                 )}
               </FilterReadings>
@@ -177,4 +199,15 @@ class Home extends Component {
   }
 }
 
-export default withStyles(styles)(Home);
+const mapStateToProps = state => ({
+  readings: state.readings.readings,
+});
+
+const mapDispatchToProps = dispatch => ({
+  setReadings: list => dispatch(actions.setReadings(list)),
+});
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps,
+)(withStyles(styles)(Home));

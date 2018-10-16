@@ -24,7 +24,7 @@ class Readings extends Component {
   };
 
   onUpdateToggleStatus = async (name, checked) => {
-    const { readings } = this.props;
+    const { filterReadings } = this.props;
     const { onUpdateReadingCount, onUpdateList } = this.props;
     try {
       this.setState({ isLoading: name });
@@ -32,7 +32,7 @@ class Readings extends Component {
         readingName: name,
         stateValue: checked,
       });
-      const list = readings.map(reading => {
+      const list = filterReadings.map(reading => {
         if (reading.name === name) {
           return { ...reading, active: checked };
         }
@@ -65,9 +65,9 @@ class Readings extends Component {
 
   render() {
     const { isLoading, isSnackbarOpen, snackbarMessage } = this.state;
-    const { readings, classes } = this.props;
+    const { filterReadings, classes } = this.props;
 
-    const allList = readings.map((device, i) => (
+    const allList = filterReadings.map((device, i) => (
       <Fade key={i.toString()} in timeout={1000}>
         <Grid item xs={2}>
           <Reading

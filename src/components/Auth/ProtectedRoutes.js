@@ -39,15 +39,11 @@ class ProtectedRoutes extends Component {
   }
 }
 
-const mapStateToProps = state => ({
-  readings: state.readings.readings,
-});
-
 const mapDispatchToProps = dispatch => ({
   getReadings: () => dispatch(actions.getDeviceReadings()),
 });
 
 export default connect(
-  mapStateToProps,
+  null,
   mapDispatchToProps,
 )(ProtectedRoutes);

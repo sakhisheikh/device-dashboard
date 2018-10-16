@@ -1,4 +1,4 @@
-export const MatchSorter = ({ inputValue, deviceReadings }) =>
-  deviceReadings.filter(reading =>
+export const MatchSorter = ({ inputValue, readings }) =>
+  readings.filter(reading =>
     new RegExp(inputValue, 'i').test(reading.name),
   );
