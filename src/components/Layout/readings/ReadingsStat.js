@@ -1,13 +1,18 @@
-import React, { Component } from 'react';
+import React from 'react';
+import { connect } from 'react-redux';
+import Statistics from '../../../helpers/Statistics';
+import ReadingsDialog from '../ReadingsDialog';
 
-class ReadingsStat extends Component {
-  render() {
-    return (
-      <div>
-
-      </div>
-    )
-  }
+function ReadingsStat({ readings }) {
+  return (
+    <Statistics {...{ readings }}>
+      {({ readingsStat }) => <ReadingsDialog {...{ readingsStat }} />}
+    </Statistics>
+  );
 }
 
-export default ReadingsStat;
+const mapStateToProps = state => ({
+  readings: state.readings.readings,
+});
+
+export default connect(mapStateToProps)(ReadingsStat);

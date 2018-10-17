@@ -5,7 +5,6 @@ import { withStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 import Fade from '@material-ui/core/Fade';
 import { connect } from 'react-redux';
-import * as DEVICE from '../../api/device';
 import Readings from './Readings';
 import SearchReading from './SearchReading';
 import FilterReadings from '../../helpers/FilterReadings';
@@ -32,50 +31,15 @@ const styles = () => ({
 
 class Home extends Component {
   state = {
-    readings: [],
     inputValue: '',
     readingCount: { active: 0, inactive: 0 },
     updateState: false,
-    externalData: false,
   };
 
-  static getDerivedStateFromProps(nextProps, prevState) {
-    if (nextProps.readings.length && !prevState.externalData) {
-      return {
-        readings: nextProps.readings,
-        externalData: true,
-      };
-    }
-    return null;
-  }
-
   componentDidMount() {
-    this.onUpdateReadingCount(this.props.readings);
+    const { readings } = this.props;
+    this.onUpdateReadingCount(readings);
   }
-
-  // componentDidUpdate(prevProps, prevState) {
-  //   console.log("#####")
-  //   if (prevState.externalData) {
-  //     console.log("IM INSDE")
-  //     this.onUpdateReadingCount(prevProps.readings);
-  //     this.setState({ externalData: false });
-  //   }
-  // }
-
-  // componentDidMount() {
-  //   DEVICE.getDeviceReadings().then(res => {
-  //     const { data } = res;
-  //     this.setState(
-  //       {
-  //         deviceReadings: data,
-  //       },
-  //       () => {
-  //         const { deviceReadings } = this.state;
-  //         this.onUpdateReadingCount(deviceReadings);
-  //       },
-  //     );
-  //   });
-  // }
 
   handleChange = event => {
     const eventVal = event.target.value.trim();
@@ -98,8 +62,8 @@ class Home extends Component {
     });
   };
 
-  onUpdateReadingCount = reading => {
-    const { active, inactive } = reading.reduce(
+  onUpdateReadingCount = readings => {
+    const { active, inactive } = readings.reduce(
       (cv, acc) => {
         if (acc.active) {
           cv.active += 1;
@@ -110,11 +74,9 @@ class Home extends Component {
       },
       { active: 0, inactive: 0 },
     );
-    this.setState(state => {
-      return {
-        updateState: false,
-        readingCount: { active, inactive },
-      };
+    this.setState({
+      updateState: false,
+      readingCount: { active, inactive },
     });
   };
 
@@ -131,12 +93,7 @@ class Home extends Component {
   };
 
   render() {
-    const {
-      deviceReadings,
-      inputValue,
-      readingCount,
-      updateState,
-    } = this.state;
+    const { inputValue, readingCount, updateState } = this.state;
     const { classes, readings } = this.props;
 
     return (
@@ -180,20 +137,20 @@ class Home extends Component {
           </Fade>
         </Grid>
 
-        <ReadingContext.Consumer>
+        {/* <ReadingContext.Consumer>
           {({ isReadingsDialog, handleStats }) => (
-            <ReadingsStat
-              {...{ deviceReadings, handleStats, isReadingsDialog }}
-            >
+            <ReadingsStat {...{ handleStats, isReadingsDialog }}>
               {({ readingsStat }) => (
-                <ReadingsDialog
-                  toggleDialog={this.toggleDialog}
-                  {...{ readingsStat, isReadingsDialog }}
-                />
+                !readingsStat && (
+                  <ReadingsDialog
+                    toggleDialog={this.toggleDialog}
+                    {...{ readingsStat, isReadingsDialog }}
+                  />
+                )
               )}
             </ReadingsStat>
           )}
-        </ReadingContext.Consumer>
+        </ReadingContext.Consumer> */}
       </React.Fragment>
     );
   }

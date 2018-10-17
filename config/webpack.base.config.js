@@ -26,7 +26,7 @@ module.exports = env => {
           {
             test: /\.(scss|css)$/,
             use: [
-              PLATFORM === 'production' ? MiniCssExtractPlugin.loader : 'style-loader',
+              'css-hot-loader', MiniCssExtractPlugin.loader,
               'css-loader',
               'sass-loader'
             ]
@@ -41,6 +41,9 @@ module.exports = env => {
         new webpack.DefinePlugin({
           'process.env.VERSION': JSON.stringify(VERSION),
           'process.env.PLATFORM': JSON.stringify(PLATFORM)
+        }),
+        new MiniCssExtractPlugin({
+          filename: 'style.css',
         }),
         //new CopyWebpackPlugin([{ from: 'src/static' }]),
       ],

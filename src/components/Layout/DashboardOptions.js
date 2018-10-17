@@ -1,9 +1,11 @@
 import React, { Component } from 'react';
 import { withStyles } from '@material-ui/core/styles';
 import List from '@material-ui/core/List';
+import PropTypes from 'prop-types';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
+import { Link } from 'react-router-dom';
 import Divider from '@material-ui/core/Divider';
 import InboxIcon from '@material-ui/icons/Inbox';
 import DraftsIcon from '@material-ui/icons/Drafts';
@@ -20,7 +22,7 @@ const styles = theme => ({
 class DashboardOptions extends Component {
   state = {
     isReadinsDialog: false,
-  }
+  };
 
   handleStats = () => {
     this.setState(state => {
@@ -36,23 +38,20 @@ class DashboardOptions extends Component {
     return (
       <div className={classes.root}>
         <List component="nav">
-          <ListItem button>
+          <ListItem button component={Link} to="/">
             <ListItemIcon>
               <InboxIcon />
             </ListItemIcon>
             <ListItemText primary="Home" />
           </ListItem>
-          <ListItem button>
+          <ListItem button component={Link} to="/readings-stats">
             <ListItemIcon>
               <DraftsIcon />
             </ListItemIcon>
             <ReadingContext.Provider
               value={{ isReadinsDialog, handleStats: this.handleStats }}
             >
-              <ListItemText
-                onClick={this.handleStats}
-                primary="Readings Stats"
-              />
+              <ListItemText primary="Readings Stats" />
             </ReadingContext.Provider>
           </ListItem>
         </List>
@@ -61,5 +60,9 @@ class DashboardOptions extends Component {
     );
   }
 }
+
+DashboardOptions.propTypes = {
+  classes: PropTypes.object.isRequired,
+};
 
 export default withStyles(styles)(DashboardOptions);

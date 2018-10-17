@@ -4,9 +4,14 @@ import { withGoogleMap, GoogleMap, Polyline } from 'react-google-maps';
 import { MarkerWithLabel } from 'react-google-maps/lib/components/addons/MarkerWithLabel';
 import MapControl from './MapControl';
 import MapBottomPage from './MapBottomPage';
-import { labelStyling, lineCoordinatesStyling } from '../../utils/Constants';
+import { labelStyling, lineCoordinatesStyling, initializeMap } from '../../utils/Constants';
 
 class Map extends Component {
+
+  componentDidMount = () => {
+    initializeMap(); // Avoid Roboto fonts downloading in google maps
+  }
+
 
   componentDidUpdate = () => {
     const { latitude, longitude, directions } = this.props;

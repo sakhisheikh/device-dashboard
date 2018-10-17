@@ -14,6 +14,7 @@ function ReadingPieChart({ value, unit }) {
         dataKey="value"
         cx="50%"
         cy="50%"
+        animationDuration={5000}
         startAngle={-180}
         endAngle={180}
         innerRadius="95%"

@@ -5,6 +5,7 @@ import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import { withRouter } from 'react-router-dom';
 import Drawer from '@material-ui/core/Drawer';
+import { Switch, Route } from 'react-router-dom';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import IconButton from '@material-ui/core/IconButton';
@@ -143,7 +144,7 @@ class MainLayout extends Component {
             <main className={classes.content}>
               <div className={classes.toolbar} />
               {isAuthenticated ? (
-                <ProtectedRoutes />
+                 <Route render={props => <ProtectedRoutes {...props} />} />
               ) : (
                   <Typography>Please log in to use this app</Typography>
                 )}

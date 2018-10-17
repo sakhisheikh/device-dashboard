@@ -23,6 +23,7 @@ This app is built with certain essential components:
  * axios
  * JSS (CSS in JS)
  * HMR (Hot Module Replacement)
+ * CSS hot reload
 
 ## `Advance React Patterns`
 
