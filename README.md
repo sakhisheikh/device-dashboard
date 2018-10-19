@@ -53,7 +53,7 @@ These are the few most powerful react patterns are used while building this app.
 ## `Additional Functionalities`
 
  * [Auth0](https://auth0.com/) Integration
- * Google maps integration to get drections to device location
+ * Google maps integration to get directions to device location
 
 ## `Get Started`
 
@@ -66,4 +66,4 @@ To create production build: ```npm run prebuild``` | ```yarn prebuild```
 ## Notes
 * Local environment is configured with `port 3001` to make sure [Auth0](https://auth0.com/) authentcation callback sends response on this port.
 * Sign up first to access dashboard
-* reading key is added n `api-server.js` to render shapes for particular readings.
+* reading key is added in `api-server.js` to render shapes for particular readings.
