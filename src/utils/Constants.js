@@ -13,7 +13,7 @@ export const labelStyling = {
 };
 
 export const lineCoordinatesStyling = {
-  strokeColor: 'orange',
+  strokeColor: '#00C49F',
   strokeOpacity: 1,
   strokeWeight: 7,
 };
@@ -21,14 +21,14 @@ export const lineCoordinatesStyling = {
 export const CHART_DATA = {
   circle: active => {
     const chartData = [
-      { name: 'score', value: 100, fill: active ? 'orange' : 'grey' },
+      { name: 'score', value: 100, fill: active ? '#00C49F' : 'grey' },
     ];
     return chartData;
   },
   degree: value => {
     const max = 360 - Math.abs(value);
     const chartData = [
-      { name: 'score', value: Math.abs(value), fill: 'orange' },
+      { name: 'score', value: Math.abs(value), fill: '#00C49F' },
       { name: 'max', value: max, max: '#eee' },
     ];
     return chartData;

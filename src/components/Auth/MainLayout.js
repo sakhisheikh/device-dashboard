@@ -42,7 +42,7 @@ const styles = theme => ({
     width: '100%',
   },
   appBar: {
-    background: 'orange',
+    background: '#00C49F',
     width: '100%',
   },
   drawerPaper: {
@@ -144,7 +144,7 @@ class MainLayout extends Component {
             <main className={classes.content}>
               <div className={classes.toolbar} />
               {isAuthenticated ? (
-                 <Route render={props => <ProtectedRoutes {...props} />} />
+                <Route render={props => <ProtectedRoutes {...props} />} />
               ) : (
                   <Typography>Please log in to use this app</Typography>
                 )}

@@ -24,7 +24,7 @@ const styles = () => ({
     left: '75%',
   },
   mapLayout: {
-    border: '2px solid orange',
+    border: '2px solid #00C49F',
     borderRadius: '8px',
   },
 });

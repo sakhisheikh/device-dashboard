@@ -11,7 +11,6 @@ import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import DateIcon from '@material-ui/icons/Timer';
-import orange from '@material-ui/core/colors/orange';
 import PieChart from '../ReadingCharts/PieChart';
 import ReadingAlert from '../Loaders/ReadingAlert';
 import { CHART_DATA } from '../../utils/Constants';
@@ -27,14 +26,14 @@ const Shapes = ({ id, value, unit, active }) => {
 
 const styles = {
   root: {
-    color: orange[600],
+    color: '#00C49F',
     '&$checked': {
-      color: orange[500],
+      color: '#00C49F',
     },
   },
   checked: {},
   card: {
-    border: '2px solid orange',
+    border: '2px solid #00C49F',
     backgroundColor: 'rgba(0, 0, 0, 0.09)',
     boxShadow: '6px 10px 6px -6px #777',
   },
@@ -60,7 +59,7 @@ const styles = {
     marginBottom: 12,
   },
   loader: {
-    color: 'orange',
+    color: '#00C49F',
   },
 };
 

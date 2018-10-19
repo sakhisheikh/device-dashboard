@@ -16,7 +16,7 @@ const styles = () => ({
     transition: 'opacity 500ms',
   },
   loader: {
-    color: 'orange',
+    color: '#00C49F',
   },
 });
 

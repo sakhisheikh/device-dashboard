@@ -1,5 +1,5 @@
 import React from 'react';
-import { PieChart, Pie } from 'recharts';
+import { PieChart, Pie, Cell } from 'recharts';
 import PropTypes from 'prop-types';
 import { CHART_DATA } from '../../utils/Constants';
 
@@ -16,13 +16,17 @@ function ReadingPieChart({
         dataKey="value"
         cx="50%"
         cy="50%"
+        fill="#8884d8"
         startAngle={-180}
         endAngle={180}
         innerRadius="95%"
-        outerRadius="105%"
+        outerRadius="110%"
+        paddingAngle={5}
         stroke="none"
         isAnimationActive={false}
-      />
+      >
+        <Cell />
+      </Pie>
       <g>
         <text
           x="50%"

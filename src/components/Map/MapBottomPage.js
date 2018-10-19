@@ -14,7 +14,7 @@ const styles = {
     margin: 30,
     borderRadius: '8px !important',
     color: '#FFFFFF',
-    backgroundColor: 'orange',
+    backgroundColor: '#00C49F',
     '&:hover': {
       backgroundColor: 'grey',
     },
