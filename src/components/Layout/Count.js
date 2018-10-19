@@ -5,6 +5,7 @@ import Grid from '@material-ui/core/Grid';
 import { withStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import PieChart from '../ReadingCharts/PieChart';
+import { CHART_DATA } from '../../utils/Constants';
 
 const styles = {
   root: {
@@ -20,10 +21,15 @@ const styles = {
 
 const Count = ({ readingCount, classes }) => {
   return Object.keys(readingCount).map((key, i) => {
+    const active = key === 'active';
     return (
       <Grid key={i.toString()} item xs={6}>
         <div align="center">
-          <PieChart align="center" fontSize={40} value={readingCount[key]} />
+          <PieChart
+            chartData={CHART_DATA.circle(active)}
+            fontSize={40}
+            value={readingCount[key]}
+          />
         </div>
         <Typography
           align="center"

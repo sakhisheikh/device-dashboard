@@ -16,14 +16,12 @@ import PieChart from '../ReadingCharts/PieChart';
 import ReadingAlert from '../Loaders/ReadingAlert';
 import { CHART_DATA } from '../../utils/Constants';
 
-const Shapes = ({ id, value, unit }) => {
+const Shapes = ({ id, value, unit, active }) => {
   switch (id) {
-    case 'rotation':
-      return (
-        <PieChart chartData={CHART_DATA.degree(value)} {...{ value, unit }} />
-      );
     default:
-      return <PieChart chartData={CHART_DATA.circle} {...{ value, unit }} />;
+      return (
+        <PieChart chartData={CHART_DATA.circle(active)} {...{ value, unit }} />
+      );
   }
 };
 
@@ -130,7 +128,7 @@ class ReadingCard extends Component {
               {name}
             </Typography>
             <div align="center">
-              <Shapes {...{ id, value, unit }} />
+              <Shapes {...{ id, value, unit, active }} />
             </div>
             <ListItem disableGutters>
               <ListItemIcon>

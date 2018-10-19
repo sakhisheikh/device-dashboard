@@ -19,7 +19,12 @@ export const lineCoordinatesStyling = {
 };
 
 export const CHART_DATA = {
-  circle: [{ name: 'score', value: 100, fill: 'orange' }],
+  circle: active => {
+    const chartData = [
+      { name: 'score', value: 100, fill: active ? 'orange' : 'grey' },
+    ];
+    return chartData;
+  },
   degree: value => {
     const max = 360 - Math.abs(value);
     const chartData = [

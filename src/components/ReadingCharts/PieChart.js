@@ -7,7 +7,7 @@ function ReadingPieChart({
   value,
   unit,
   fontSize = 15,
-  chartData = CHART_DATA.circle,
+  chartData = CHART_DATA.circle(true),
 }) {
   return (
     <PieChart width={150} height={100}>
@@ -21,6 +21,7 @@ function ReadingPieChart({
         innerRadius="95%"
         outerRadius="105%"
         stroke="none"
+        isAnimationActive={false}
       />
       <g>
         <text

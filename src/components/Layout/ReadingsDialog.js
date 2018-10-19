@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import Dialog from '@material-ui/core/Dialog';
 import Grid from '@material-ui/core/Grid';
+import { PieChart, Pie, Cell } from 'recharts';
 import ListItemText from '@material-ui/core/ListItemText';
 import ListItem from '@material-ui/core/ListItem';
 import List from '@material-ui/core/List';
@@ -14,6 +15,12 @@ import Typography from '@material-ui/core/Typography';
 import CloseIcon from '@material-ui/icons/Close';
 import Slide from '@material-ui/core/Slide';
 import { Link } from 'react-router-dom';
+
+const data = [{ name: 'Group A', value: 400 }, { name: 'Group B', value: 300 },
+{ name: 'Group C', value: 300 }, { name: 'Group D', value: 200 }];
+const COLORS = ['#0088FE', '#00C49F', '#FFBB28', '#FF8042'];
+
+const RADIAN = Math.PI / 180;
 
 const styles = {
   root: {
@@ -99,9 +106,37 @@ class ReadingsDialog extends Component {
             spacing={8}
           >
             <Grid item>
-              <Typography variant="h6" color="inherit" className={classes.flex}>
-                GRAPH (in progress)
-              </Typography>
+              <PieChart width={800} height={400} onMouseEnter={this.onPieEnter}>
+                <Pie
+                  data={data}
+                  cx={120}
+                  cy={200}
+                  innerRadius={60}
+                  outerRadius={80}
+                  fill="#8884d8"
+                  paddingAngle={5}
+                  label
+                >
+                  {data.map((_, index) => (
+                    <Cell fill={COLORS[index % COLORS.length]} />))}
+                </Pie>
+                <Pie
+                  data={data}
+                  cx={420}
+                  cy={200}
+                  startAngle={180}
+                  endAngle={0}
+                  innerRadius={60}
+                  outerRadius={80}
+                  fill="#8884d8"
+                  paddingAngle={5}
+                  label
+                >
+                  {
+                    data.map((entry, index) => <Cell fill={COLORS[index % COLORS.length]} />)
+                  }
+                </Pie>
+              </PieChart>
             </Grid>
           </Grid>
         </Grid>
