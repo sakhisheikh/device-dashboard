@@ -4,7 +4,7 @@ import SnackbarContent from '@material-ui/core/SnackbarContent';
 import Grid from '@material-ui/core/Grid';
 import { withStyles } from '@material-ui/core/styles';
 import Fade from '@material-ui/core/Fade';
-import Reading from './Reading';
+import ReadingCard from './ReadingCard';
 import * as DEVICE from '../../api/device';
 
 const styles = theme => ({
@@ -70,7 +70,7 @@ class Readings extends Component {
     const allList = filterReadings.map((device, i) => (
       <Fade key={i.toString()} in timeout={1000}>
         <Grid item xs={2}>
-          <Reading
+          <ReadingCard
             {...device}
             onUpdate={this.onUpdateToggleStatus}
             isLoading={isLoading}

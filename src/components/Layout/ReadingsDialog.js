@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import Dialog from '@material-ui/core/Dialog';
@@ -29,61 +29,85 @@ const styles = {
 };
 
 function Transition(props) {
-  return <Slide direction="up" {...props} />;
+  return <Slide timeout={5000} in direction="up" {...props} />;
 }
 
-function ReadingsDialog({ classes }) {
-  return (
-    <Dialog fullScreen open TransitionComponent={Transition}>
-      <AppBar className={classes.appBar}>
-        <Toolbar>
-          <IconButton
-            component={Link}
-            to="/"
-            color="inherit"
-            aria-label="Close"
+class ReadingsDialog extends Component {
+  state = {
+    open: false,
+  };
+
+  componentDidMount() {
+    this.toggleDialog();
+  }
+
+  componentWillUnmount() {
+    this.toggleDialog();
+  }
+
+  toggleDialog = () => {
+    this.setState(state => {
+      return {
+        open: !state.open,
+      };
+    });
+  };
+
+  render() {
+    const { classes } = this.props;
+    const { open } = this.state;
+    return (
+      <Dialog fullScreen {...{ open }} TransitionComponent={Transition}>
+        <AppBar className={classes.appBar}>
+          <Toolbar>
+            <IconButton
+              component={Link}
+              to="/"
+              color="inherit"
+              aria-label="Close"
+            >
+              <CloseIcon />
+            </IconButton>
+            <Typography variant="h6" color="inherit" className={classes.flex}>
+              Device Readings Statistics
+            </Typography>
+          </Toolbar>
+        </AppBar>
+        <Grid container className={classes.root} spacing={8}>
+          <Grid
+            container
+            alignItems="center"
+            justify="center"
+            direction="row"
+            item
+            xs={9}
+            spacing={8}
           >
-            <CloseIcon />
-          </IconButton>
-          <Typography variant="h6" color="inherit" className={classes.flex}>
-            Device Readings Statistics
-          </Typography>
-        </Toolbar>
-      </AppBar>
-      <Grid container className={classes.root} spacing={8}>
-        <Grid
-          container
-          alignItems="center"
-          justify="center"
-          direction="row"
-          item
-          xs={9}
-          spacing={8}
-        >
-          <Grid item>
-            <Typography variant="h6" color="inherit" className={classes.flex}>
-              PIE CHART (in progress)
-            </Typography>
+            <Grid item>
+              <Typography variant="h6" color="inherit" className={classes.flex}>
+                PIE CHART (in progress)
+              </Typography>
+            </Grid>
+          </Grid>
+          <Grid
+            item
+            alignItems="center"
+            justify="center"
+            direction="row"
+            container
+            xs={3}
+            spacing={8}
+          >
+            <Grid item>
+              <Typography variant="h6" color="inherit" className={classes.flex}>
+                GRAPH (in progress)
+              </Typography>
+            </Grid>
           </Grid>
         </Grid>
-        <Grid
-          item
-          alignItems="center"
-          justify="center"
-          direction="row"
-          container
-          xs={3}
-          spacing={8}
-        >
-          <Grid item>
-            <Typography variant="h6" color="inherit" className={classes.flex}>
-              GRAPH (in progress)
-            </Typography>
-          </Grid>
-        </Grid>
-      </Grid>
-    </Dialog>
-  );
+      </Dialog>
+    );
+  }
 }
 
 ReadingsDialog.propTypes = {

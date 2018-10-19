@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import Grid from '@material-ui/core/Grid';
 import { withStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
-import Circle from '../ReadingCharts/Circle';
+import PieChart from '../ReadingCharts/PieChart';
 
 const styles = {
   root: {
@@ -23,7 +23,7 @@ const Count = ({ readingCount, classes }) => {
     return (
       <Grid key={i.toString()} item xs={6}>
         <div align="center">
-          <Circle align="center" fontSize={40} value={readingCount[key]} />
+          <PieChart align="center" fontSize={40} value={readingCount[key]} />
         </div>
         <Typography
           align="center"

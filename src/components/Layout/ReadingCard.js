@@ -13,15 +13,17 @@ import ListItemIcon from '@material-ui/core/ListItemIcon';
 import DateIcon from '@material-ui/icons/Timer';
 import orange from '@material-ui/core/colors/orange';
 import PieChart from '../ReadingCharts/PieChart';
-import Circle from '../ReadingCharts/Circle';
 import ReadingAlert from '../Loaders/ReadingAlert';
+import { CHART_DATA } from '../../utils/Constants';
 
 const Shapes = ({ id, value, unit }) => {
   switch (id) {
     case 'rotation':
-      return <PieChart {...{ value, unit }} />;
+      return (
+        <PieChart chartData={CHART_DATA.degree(value)} {...{ value, unit }} />
+      );
     default:
-      return <Circle {...{ value, unit }} />;
+      return <PieChart chartData={CHART_DATA.circle} {...{ value, unit }} />;
   }
 };
 
@@ -64,7 +66,7 @@ const styles = {
   },
 };
 
-class Reading extends Component {
+class ReadingCard extends Component {
   state = {
     open: false,
     isLoading: false,
@@ -157,7 +159,7 @@ class Reading extends Component {
   }
 }
 
-Reading.propTypes = {
+ReadingCard.propTypes = {
   classes: PropTypes.object.isRequired,
   name: PropTypes.any,
   unit: PropTypes.any,
@@ -168,4 +170,4 @@ Reading.propTypes = {
   isLoading: PropTypes.string.isRequired,
 };
 
-export default withStyles(styles)(Reading);
+export default withStyles(styles)(ReadingCard);

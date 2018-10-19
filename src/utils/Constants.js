@@ -18,6 +18,18 @@ export const lineCoordinatesStyling = {
   strokeWeight: 7,
 };
 
+export const CHART_DATA = {
+  circle: [{ name: 'score', value: 100, fill: 'orange' }],
+  degree: value => {
+    const max = 360 - Math.abs(value);
+    const chartData = [
+      { name: 'score', value: Math.abs(value), fill: 'orange' },
+      { name: 'max', value: max, max: '#eee' },
+    ];
+    return chartData;
+  },
+};
+
 export const initializeMap = () => {
   const head = document.getElementsByTagName('head')[0];
 
