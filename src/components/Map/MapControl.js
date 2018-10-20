@@ -10,7 +10,7 @@ class MapControl extends Component {
   componentWillMount() {
     this.map = this.context[MAP];
     this.controlDiv = document.createElement('div');
-    this.map.controls[position].push(this.controlDiv);
+    this.map.controls[this.props.position].push(this.controlDiv);
   }
 
   componentWillUnmount() {
