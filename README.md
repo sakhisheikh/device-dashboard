@@ -18,6 +18,7 @@ This app is built with certain essential components:
  * React Loadable
  * React-google-maps
  * RechartsJS
+ * Husky
  * Babel 7
  * React Material UI
  * axios
@@ -39,6 +40,7 @@ These are the few most powerful react patterns are used while building this app.
  * Complete App size is reduced from `3.4mb` to `1.02mb`
  * `react-google-maps` added to track device location
  * `Redux` is added for readings statistics routes
+ * Husky is added for linting and running unit tests before each commit.
  * All static files are cached with hashing strategy for better UX in production
  * Webpack Visulaizer is added to analyze production build for better app modules management
  * Recharts is used for readings' visuals
