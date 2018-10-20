@@ -1,4 +1,6 @@
+/* eslint-disable react/no-did-update-set-state */
 import { Component } from 'react';
+import PropTypes from 'prop-types';
 import * as SearchUtils from '../utils/MatchSorter';
 
 class FilterReadings extends Component {
@@ -10,7 +12,8 @@ class FilterReadings extends Component {
 
   static getDerivedStateFromProps(nextProps, prevState) {
     if (
-      nextProps.inputValue !== prevState.inputValue || nextProps.updateState
+      nextProps.inputValue !== prevState.inputValue ||
+      nextProps.updateState
     ) {
       return {
         inputValue: nextProps.inputValue,
@@ -49,5 +52,12 @@ class FilterReadings extends Component {
     });
   }
 }
+
+FilterReadings.propTypes = {
+  children: PropTypes.any,
+  inputValue: PropTypes.any,
+  readings: PropTypes.any,
+  onUpdateReadingCount: PropTypes.func.isRequired,
+};
 
 export default FilterReadings;

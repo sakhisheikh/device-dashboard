@@ -52,7 +52,7 @@ const styles = theme => ({
   content: {
     overflow: 'auto',
     flexGrow: 1,
-    backgroundColor: 'theme.palette.background.default',
+    backgroundColor: '#eee',
     padding: theme.spacing.unit * 3,
   },
 });
@@ -88,7 +88,7 @@ class MainLayout extends Component {
 
   toggleDrawer = ({ isDrawerOpen }) => () => {
     this.setState({ isDrawerOpen });
-  }
+  };
 
   render() {
     const { classes } = this.props;
@@ -102,7 +102,8 @@ class MainLayout extends Component {
       <Drawer
         open={isDrawerOpen}
         onClick={this.toggleDrawer({ isDrawerOpen: false })}
-        onKeyDown={this.toggleDrawer({ isDrawerOpen: false })}>
+        onKeyDown={this.toggleDrawer({ isDrawerOpen: false })}
+      >
         <div tabIndex={0} role="button">
           <DashboardOptions className={classes.sideList} />
         </div>

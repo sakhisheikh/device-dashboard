@@ -1,7 +1,7 @@
 import React from 'react';
 
 const ReadingsContext = React.createContext({
-  handleStats: () => { },
+  handleStats: () => {},
   isReadingsDialog: false,
 });
 

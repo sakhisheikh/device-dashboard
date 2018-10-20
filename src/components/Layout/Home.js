@@ -10,9 +10,6 @@ import SearchReading from './SearchReading';
 import FilterReadings from '../../helpers/FilterReadings';
 import Count from './Count';
 import MapLayout from '../Map/MapLayout';
-import ReadingsDialog from './ReadingsDialog';
-import ReadingContext from './context/ReadingsContext';
-import ReadingsStat from './readings/ReadingsStat';
 import actions from '../../actions/index';
 
 const styles = () => ({
@@ -20,12 +17,7 @@ const styles = () => ({
     flexGrow: 1,
   },
   leftAnchor: {
-    position: 'absolute',
-    left: '75%',
-  },
-  mapLayout: {
-    border: '2px solid #00C49F',
-    borderRadius: '8px',
+    position: 'relative',
   },
 });
 
@@ -103,7 +95,7 @@ class Home extends Component {
             <Grid item xs={12}>
               <SearchReading handleChange={this.handleChange} />
             </Grid>
-            <Grid item container xs={12} spacing={8}>
+            <Grid item container xs={12} spacing={24}>
               <FilterReadings
                 {...{ inputValue, readings, updateState }}
                 onUpdateReadingCount={this.onUpdateReadingCount}
@@ -124,13 +116,7 @@ class Home extends Component {
               <Grid item container xs={12} spacing={8}>
                 <Count {...{ readingCount }} />
               </Grid>
-              <Grid
-                className={classes.mapLayout}
-                item
-                container
-                xs={12}
-                spacing={8}
-              >
+              <Grid item container xs={12} spacing={8}>
                 <MapLayout />
               </Grid>
             </Grid>

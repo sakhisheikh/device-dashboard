@@ -2,7 +2,7 @@ import React from 'react';
 
 const MapContext = React.createContext({
   directions: '',
-  getDirections: () => { },
+  getDirections: () => {},
 });
 
 export default MapContext;

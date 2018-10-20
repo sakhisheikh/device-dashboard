@@ -10,6 +10,13 @@ import App from './App';
 import store from './store';
 
 const theme = createMuiTheme({
+  overrides: {
+    MuiIconButton: {
+      root: {
+        padding: 0,
+      },
+    },
+  },
   typography: {
     useNextVariants: true,
     suppressDeprecationWarnings: true,

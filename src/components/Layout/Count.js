@@ -26,6 +26,7 @@ const Count = ({ readingCount, classes }) => {
       <Grid key={i.toString()} item xs={6}>
         <div align="center">
           <PieChart
+            dy={13}
             chartData={CHART_DATA.circle(active)}
             fontSize={40}
             value={readingCount[key]}

@@ -9,11 +9,22 @@
         "prebuild": "webpack --mode production --config config/webpack.prod.config.js --env.PLATFORM=production --env.VERSION=stag --progress",
         "build": "node server",
         "lint-web": "eslint --debug src/",
+        "lint": "eslint --debug src/",
+        "lint:write": "eslint --debug src/ --fix",
+        "prettier": "prettier --write src/**/*.js",
         "test": "jest",
         "test:watch": "jest --watch",
         "test:coverage": "jest --coverage --colors",
         "start:api": "node api-server.js"
     },
+    "husky": {
+        "hooks": {
+          "pre-commit": "lint-staged"
+        }
+      },
+    "lint-staged": {    
+        "*.(js|jsx)": ["npm run lint:write", "git add"]  
+     },
     "license": "ISC",
     "dependencies": {
         "@material-ui/core": "^3.0.0",
@@ -67,6 +78,7 @@
         "eslint-plugin-prettier": "^2.6.0",
         "eslint-plugin-react": "^7.9.1",
         "html-webpack-plugin": "^3.2.0",
+        "husky": "^1.1.2",
         "jest": "^23.4.2",
         "mini-css-extract-plugin": "^0.4.3",
         "node-sass": "^4.8.3",

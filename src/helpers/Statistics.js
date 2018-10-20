@@ -6,9 +6,9 @@ class Statistics extends Component {
     readingsStat: [],
   };
 
-  componentDidMount() {
-    console.log("Mounted")
-  }
+  // componentDidMount() {
+  //   console.log('Mounted');
+  // }
 
   // onInitializeStatistics = () => {
 
@@ -23,12 +23,8 @@ class Statistics extends Component {
   }
 }
 
-// Directions.propTypes = {
-//   children: PropTypes.any,
-//   latitude: PropTypes.any,
-//   longitude: PropTypes.any,
-//   isDirection: PropTypes.any,
-//   onDirectionsAvailable: PropTypes.func.isRequired,
-// };
+Statistics.propTypes = {
+  children: PropTypes.any,
+};
 
 export default Statistics;

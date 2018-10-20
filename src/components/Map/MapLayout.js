@@ -5,7 +5,6 @@ import Directions from '../../helpers/Directions';
 import MapContext from './MapContext';
 
 class MapLayout extends Component {
-
   constructor(props) {
     super(props);
 
@@ -13,7 +12,7 @@ class MapLayout extends Component {
       latitude: '',
       longitude: '',
       isDirection: false,
-    }
+    };
     this._isMounted = false;
   }
 
@@ -24,7 +23,11 @@ class MapLayout extends Component {
     };
 
     if (navigator.geolocation && this._isMounted)
-      navigator.geolocation.getCurrentPosition(this.showPosition, this.showError, options);
+      navigator.geolocation.getCurrentPosition(
+        this.showPosition,
+        this.showError,
+        options,
+      );
   }
 
   showPosition = ({ coords: { latitude, longitude } }) => {
@@ -36,38 +39,52 @@ class MapLayout extends Component {
   };
 
   onDirectionsAvailable = ({ isDirection }) => {
-    this.toggleDirectionState(isDirection)
+    this.toggleDirectionState(isDirection);
   };
 
   getDirections = ({ isDirection }) => () => {
-    this.toggleDirectionState(isDirection)
+    this.toggleDirectionState(isDirection);
   };
 
   toggleDirectionState = isDirection => {
     this.setState({
       isDirection,
     });
-  }
+  };
 
   render() {
     const { latitude, longitude, isDirection } = this.state;
     return (
-
       <Directions
-        {...{ latitude, longitude, isDirection }} onDirectionsAvailable={this.onDirectionsAvailable}
+        {...{ latitude, longitude, isDirection }}
+        onDirectionsAvailable={this.onDirectionsAvailable}
       >
-        {(({ directions }) => (
-          <MapContext.Provider value={{ getDirections: this.getDirections, directions }}>
+        {({ directions }) => (
+          <MapContext.Provider
+            value={{ getDirections: this.getDirections, directions }}
+          >
             <Map
-              containerElement={<div style={{ height: '500px', width: '100%', borderRadius: '8px' }} />}
-              mapElement={<div style={{ height: `100%`, borderRadius: '8px' }} />}
+              containerElement={
+                <div
+                  style={{
+                    position: 'absolute',
+                    height: '500px',
+                    width: '100%',
+                    borderRadius: '8px',
+                    border: '2px solid #00C49F',
+                    overflow: 'hidden'
+                  }}
+                />
+              }
+              mapElement={
+                <div style={{ height: `100%`, borderRadius: '8px' }} />
+              }
               {...{ directions, latitude, longitude, isDirection }}
             />
           </MapContext.Provider>
-        ))}
-      </Directions >
+        )}
+      </Directions>
     );
-
   }
 }
 

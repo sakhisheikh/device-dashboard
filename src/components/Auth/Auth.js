@@ -33,16 +33,16 @@ class Auth {
           return reject(err);
         }
         this.setSession(authResult);
-        resolve();
+        return resolve();
       });
-    })
+    });
   }
 
   isAuthenticated() {
     return new Date().getTime() < this.expiresAt;
   }
 
-  setSession(authResult, step) {
+  setSession(authResult) {
     this.idToken = authResult.idToken;
     this.profile = authResult.idTokenPayload;
     // set the time that the id token will expire at
@@ -65,7 +65,7 @@ class Auth {
       this.auth0.checkSession({}, (err, authResult) => {
         if (err) return reject(err);
         this.setSession(authResult);
-        resolve();
+        return resolve();
       });
     });
   }

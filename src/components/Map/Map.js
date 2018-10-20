@@ -4,14 +4,16 @@ import { withGoogleMap, GoogleMap, Polyline } from 'react-google-maps';
 import { MarkerWithLabel } from 'react-google-maps/lib/components/addons/MarkerWithLabel';
 import MapControl from './MapControl';
 import MapBottomPage from './MapBottomPage';
-import { labelStyling, lineCoordinatesStyling, initializeMap } from '../../utils/Constants';
+import {
+  labelStyling,
+  lineCoordinatesStyling,
+  initializeMap,
+} from '../../utils/Constants';
 
 class Map extends Component {
-
   componentDidMount = () => {
     initializeMap(); // Avoid Roboto fonts downloading in google maps
-  }
-
+  };
 
   componentDidUpdate = () => {
     const { latitude, longitude, directions } = this.props;
@@ -21,14 +23,14 @@ class Map extends Component {
       mapBounds.extend(new google.maps.LatLng(latitude, longitude));
       this.refs.map.fitBounds(mapBounds);
     }
-  }
+  };
 
   render() {
     const { directions, latitude, longitude } = this.props;
     return (
       <GoogleMap
         defaultZoom={11}
-        ref='map'
+        ref="map"
         defaultCenter={new google.maps.LatLng(52.511991, 13.383959)}
         defaultOptions={{
           gestureHandling: 'greedy',
@@ -53,31 +55,31 @@ class Map extends Component {
           labelStyle={labelStyling}
           defaultOpacity={1}
         >
-          <div>
-            Device Location
-          </div>
+          <div>Device Location</div>
         </MarkerWithLabel>
 
-        {latitude && longitude && <MarkerWithLabel
-          position={new google.maps.LatLng(latitude, longitude)}
-          labelAnchor={new google.maps.Point(75, 90)}
-          labelStyle={labelStyling}
-          defaultOpacity={1}
-        >
-          <div>
-            You're here
-      </div>
-        </MarkerWithLabel>}
+        {latitude &&
+          longitude && (
+            <MarkerWithLabel
+              position={new google.maps.LatLng(latitude, longitude)}
+              labelAnchor={new google.maps.Point(75, 90)}
+              labelStyle={labelStyling}
+              defaultOpacity={1}
+            >
+              <div>You're here</div>
+            </MarkerWithLabel>
+          )}
 
-        {directions && <Polyline
-          path={directions}
-          geodesic={false}
-          options={lineCoordinatesStyling}
-        />}
+        {directions && (
+          <Polyline
+            path={directions}
+            geodesic={false}
+            options={lineCoordinatesStyling}
+          />
+        )}
       </GoogleMap>
     );
   }
 }
 
-export default (withGoogleMap(Map));
-
+export default withGoogleMap(Map);

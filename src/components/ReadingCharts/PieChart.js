@@ -6,11 +6,12 @@ import { CHART_DATA } from '../../utils/Constants';
 function ReadingPieChart({
   value,
   unit,
-  fontSize = 15,
+  dy = 6,
+  fontSize = 12,
   chartData = CHART_DATA.circle(true),
 }) {
   return (
-    <PieChart width={150} height={100}>
+    <PieChart width={100} height={100}>
       <Pie
         data={chartData}
         dataKey="value"
@@ -19,8 +20,8 @@ function ReadingPieChart({
         fill="#8884d8"
         startAngle={-180}
         endAngle={180}
-        innerRadius="95%"
-        outerRadius="110%"
+        innerRadius="90%"
+        outerRadius="100%"
         paddingAngle={5}
         stroke="none"
         isAnimationActive={false}
@@ -31,7 +32,7 @@ function ReadingPieChart({
         <text
           x="50%"
           y="50%"
-          dy={8}
+          dy={dy}
           style={{
             fontSize,
           }}
@@ -50,6 +51,7 @@ ReadingPieChart.propTypes = {
   value: PropTypes.any,
   chartData: PropTypes.array,
   fontSize: PropTypes.number,
+  dy: PropTypes.number,
 };
 
 export default ReadingPieChart;

@@ -31,16 +31,18 @@ class MapBottomPage extends Component {
     return (
       <Grid className={classes.root} container item xs={12}>
         <MapContext.Consumer>
-          {({ getDirections, directions }) => (
-            !directions && (
-              <Button
-                onClick={getDirections({ isDirection: true })}
-                className={classes.buttonStyle}
-              >
-                Get Directions
-              </Button>
-            )
-          )}
+          {({ getDirections, directions }) => {
+            return (
+              !directions && (
+                <Button
+                  onClick={getDirections({ isDirection: true })}
+                  className={classes.buttonStyle}
+                >
+                  Get Directions
+                </Button>
+              )
+            );
+          }}
         </MapContext.Consumer>
       </Grid>
     );

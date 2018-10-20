@@ -1,5 +1,8 @@
+/* eslint-disable no-console */
 import { Component } from 'react';
 import PropTypes from 'prop-types';
+
+const google = window.google;
 
 class Directions extends Component {
   state = {
@@ -11,8 +14,8 @@ class Directions extends Component {
   static getDerivedStateFromProps(nextProps, prevState) {
     if (
       nextProps.isDirection &&
-      (nextProps.latitude !== prevState.latitude
-        && nextProps.longitude !== prevState.longitude)
+      (nextProps.latitude !== prevState.latitude &&
+        nextProps.longitude !== prevState.longitude)
     ) {
       return {
         latitude: nextProps.latitude,

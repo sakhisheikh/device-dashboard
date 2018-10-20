@@ -5,9 +5,8 @@ import CircularProgress from '@material-ui/core/CircularProgress';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import Typography from '@material-ui/core/Typography';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import Checkbox from '@material-ui/core/Checkbox';
 import ListItem from '@material-ui/core/ListItem';
+import Checkbox from '@material-ui/core/Checkbox';
 import ListItemText from '@material-ui/core/ListItemText';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import DateIcon from '@material-ui/icons/Timer';
@@ -33,9 +32,9 @@ const styles = {
   },
   checked: {},
   card: {
-    border: '2px solid #00C49F',
-    backgroundColor: 'rgba(0, 0, 0, 0.09)',
-    boxShadow: '6px 10px 6px -6px #777',
+    border: '1px solid #fafafa',
+    backgroundColor: '#fff',
+    boxShadow: '0px 3px 7px -1px rgba(0,0,0,.2)',
   },
   loaderBackground: {
     transition: 'opacity 500ms',
@@ -50,7 +49,7 @@ const styles = {
     transform: 'scale(0.8)',
   },
   title: {
-    marginBottom: 5,
+    margin: '10px 0',
     fontSize: 14,
     fontWeight: 'bold',
     color: '#4e6a87',
@@ -107,43 +106,44 @@ class ReadingCard extends Component {
     const { open, isLoading } = this.state;
     const loaderBackground = isLoading ? classes.loaderBackground : '';
 
-    const CustomCheckbox = (
-      <Checkbox
-        checked={active}
-        onChange={this.handleChange}
-        classes={{ root: classes.root, checked: classes.checked }}
-      />
-    );
-
     return (
       <React.Fragment>
         <Card className={`${classes.card} ${loaderBackground}`}>
           <CardContent className={classes.cardContent}>
-            <Typography
-              align="center"
-              className={classes.title}
-              color="textSecondary"
-            >
-              {name}
-            </Typography>
             <div align="center">
               <Shapes {...{ id, value, unit, active }} />
             </div>
+            <Typography
+              className={classes.title}
+              gutterBottom
+              align="center"
+              variant="subtitle2"
+              component="h2"
+            >
+              {name}
+            </Typography>
             <ListItem disableGutters>
-              <ListItemIcon>
+              <ListItemIcon className={classes.control}>
                 <DateIcon />
               </ListItemIcon>
               <ListItemText
                 secondary={new Date(timestamp).toLocaleTimeString()}
               />
             </ListItem>
-            <div align="center">
-              {isLoading ? (
-                <CircularProgress className={classes.loader} />
-              ) : (
-                  <FormControlLabel control={CustomCheckbox} label="Active" />
+            <ListItem disableGutters>
+              <ListItemIcon className={classes.control}>
+                {isLoading ? (
+                  <CircularProgress className={classes.loader} />
+                ) : (
+                  <Checkbox
+                    checked={active}
+                    onChange={this.handleChange}
+                    classes={{ root: classes.root, checked: classes.checked }}
+                  />
                 )}
-            </div>
+              </ListItemIcon>
+              <ListItemText secondary="Active" />
+            </ListItem>
           </CardContent>
         </Card>
         <ReadingAlert
