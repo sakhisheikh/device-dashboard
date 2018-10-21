@@ -43,9 +43,9 @@ module.exports = env => {
           'process.env.PLATFORM': JSON.stringify(PLATFORM)
         }),
         new MiniCssExtractPlugin({
-          filename: 'style.css',
+          filename: PLATFORM === 'production' ? 'style.[contenthash].css' : 'style.css',
         }),
-        //new CopyWebpackPlugin([{ from: 'src/static' }]),
+        //new CopyWebpackPlugin([{ from: 'src/static' }]), // once assets are added
       ],
       resolve: {
         extensions: ['.js', '.scss'],

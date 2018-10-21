@@ -5,13 +5,12 @@ const merge = require('webpack-merge');
 // Plugins
 const OptimizeCssAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
-const Visualizer = require('webpack-visualizer-plugin');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
-const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 
 const baseConfig = require('./webpack.base.config');
+const presetConfig = require("./presets/loadPresets");
 
-const prodConfiguration = function (version, platform) {
+const prodConfiguration = function (version, platform, presets) {
   return merge([
     {
       cache: true,
@@ -42,10 +41,6 @@ const prodConfiguration = function (version, platform) {
         new webpack.DefinePlugin({ 'process.env.VERSION': JSON.stringify(version) }),
         new webpack.DefinePlugin({ 'process.env.PLATFORM': JSON.stringify(platform) }),
         new OptimizeCssAssetsPlugin(),
-        new Visualizer({ filename: './statistics.html' }),
-        new MiniCssExtractPlugin({
-          filename: 'style.[contenthash].css',
-        }),
       ],
       output: {
         filename: '[name].[chunkhash].bundle.js',
@@ -54,9 +49,10 @@ const prodConfiguration = function (version, platform) {
         publicPath: '/',
       },
     },
+    presetConfig({ mode: 'production', presets })
   ]);
 }
 
 module.exports = function (env) {
-  return merge(baseConfig(env), prodConfiguration(env.VERSION, env.PLATFORM))
+  return merge(baseConfig(env), prodConfiguration(env.VERSION, env.PLATFORM, env.presets))
 }
