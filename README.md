@@ -1,4 +1,4 @@
-![relayrlogo](relayr.png)
+<img src="relayr.png" alt="relayrlogo" width="250x" height="100px">
 
 # Relayr Frontend Challenge
 
