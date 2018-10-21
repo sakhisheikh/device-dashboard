@@ -3,21 +3,24 @@ import { withRouter } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import authClient from './Auth';
 
-class Callback extends Component {
-  componentDidMount() {
+class AuthCallback extends Component {
+  componentDidMount = async () => {
     const { history } = this.props;
-    authClient.handleAuthentication().then(() => {
+    try {
+      await authClient.handleAuthentication();
       history.push('/');
-    });
-  }
+    } catch (error) {
+      history.push('/');
+    }
+  };
 
   render() {
     return <div>Loading...</div>;
   }
 }
 
-Callback.propTypes = {
+AuthCallback.propTypes = {
   history: PropTypes.object, // react-router-dom Injected;
 };
 
-export default withRouter(Callback);
+export default withRouter(AuthCallback);

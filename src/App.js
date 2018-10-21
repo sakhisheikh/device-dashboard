@@ -5,7 +5,7 @@ import Loading from './components/Loaders/Loading';
 
 // dynamic imports
 const AuthCallback = Loadable({
-  loader: () => import('./components/Auth/Callback'),
+  loader: () => import('./components/Auth/AuthCallback'),
   loading: Loading,
 });
 
@@ -16,6 +16,7 @@ const MainLayout = Loadable({
 
 export default () => (
   <Switch>
+    {/* Auht0 Authentication Callback */}
     <Route path="/callback" render={() => <AuthCallback />} />
     <Route path="/" render={() => <MainLayout />} />
   </Switch>

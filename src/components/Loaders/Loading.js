@@ -12,7 +12,7 @@ const styles = () => ({
     height: '100%',
     position: 'fixed',
     zIndex: 999999,
-    backgroundColor: 'rgba(255,255,255, 0.7)',
+    backgroundColor: '#eee',
     transition: 'opacity 500ms',
   },
   loader: {

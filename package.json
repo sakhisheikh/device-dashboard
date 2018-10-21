@@ -6,24 +6,23 @@
     "scripts": {
         "start": "run-p start:api start:app",
         "start:app": "webpack-dev-server  --port 3001 --mode development --config config/webpack.base.config.js --open --hot --history-api-fallback --env.PLATFORM=local --env.VERSION=stag",
+        "start:api": "node api-server.js",
         "prebuild": "webpack --mode production --config config/webpack.prod.config.js --env.PLATFORM=production --env.VERSION=stag --progress",
-        "build": "node server",
         "lint-web": "eslint --debug src/",
         "lint": "eslint --debug src/",
         "lint:write": "eslint --debug src/ --fix",
         "prettier": "prettier --write src/**/*.js",
         "test": "jest",
         "test:watch": "jest --watch",
-        "test:coverage": "jest --coverage --colors",
-        "start:api": "node api-server.js"
+        "test:coverage": "jest --coverage --colors"
     },
     "husky": {
         "hooks": {
-          "pre-commit": "lint-staged"
+          "pre-commit": "lint-staged && yarn test"
         }
       },
     "lint-staged": {    
-        "*.(js|jsx)": ["npm run lint:write", "git add"]  
+        "*.(js|jsx)": ["yarn lint:write", "git add"]  
      },
     "license": "ISC",
     "dependencies": {

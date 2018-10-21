@@ -15,6 +15,11 @@ const ReadingsStats = Loadable({
   loading: Loading,
 });
 
+const Notfound = Loadable({
+  loader: () => import('../Layout/Notfound'),
+  loading: Loading,
+});
+
 class ProtectedRoutes extends Component {
   componentDidMount() {
     this.onGetReadings();
@@ -34,6 +39,7 @@ class ProtectedRoutes extends Component {
       <Switch>
         <Route exact path="/" component={Home} />
         <Route path="/readings-stats" component={ReadingsStats} />
+        <Route component={Notfound} />
       </Switch>
     );
   }

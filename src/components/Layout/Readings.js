@@ -12,6 +12,9 @@ const styles = theme => ({
     flexGrow: 1,
   },
   snackBar: {
+    backgroundColor: '#00C49F',
+  },
+  error: {
     backgroundColor: theme.palette.error.dark,
   },
 });
@@ -21,6 +24,7 @@ class Readings extends Component {
     isLoading: '',
     isSnackbarOpen: false,
     snackbarMessage: '',
+    isError: false,
   };
 
   onUpdateToggleStatus = async (name, checked) => {
@@ -43,6 +47,7 @@ class Readings extends Component {
       this.setState({
         isLoading: '',
         isSnackbarOpen: true,
+        isError: false,
         snackbarMessage: 'Reading Successfully Updated',
       });
       return result.success;
@@ -50,6 +55,7 @@ class Readings extends Component {
       this.setState({
         isLoading: '',
         isSnackbarOpen: true,
+        isError: true,
         snackbarMessage: error.response.data.message,
       });
       return error.response.data.success;
@@ -64,8 +70,9 @@ class Readings extends Component {
   };
 
   render() {
-    const { isLoading, isSnackbarOpen, snackbarMessage } = this.state;
+    const { isLoading, isSnackbarOpen, snackbarMessage, isError } = this.state;
     const { filterReadings, classes } = this.props;
+    const snackBarStyle = isError ? classes.error : classes.snackBar;
 
     const allList = filterReadings.map((device, i) => (
       <Fade key={i.toString()} in timeout={1000}>
@@ -92,7 +99,7 @@ class Readings extends Component {
           onClose={this.handleCloseSnackbar}
         >
           <SnackbarContent
-            className={classes.snackBar}
+            className={snackBarStyle}
             aria-describedby="client-snackbar"
             message={<span id="message-id">{snackbarMessage}</span>}
           />

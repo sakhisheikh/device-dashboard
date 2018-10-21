@@ -5,13 +5,14 @@ import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import { withRouter } from 'react-router-dom';
 import Drawer from '@material-ui/core/Drawer';
-import { Switch, Route } from 'react-router-dom';
+import { Route, Link } from 'react-router-dom';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
+import Grid from '@material-ui/core/Grid';
 import ProtectedRoutes from './ProtectedRoutes';
 import authClient from './Auth';
 import Loading from '../Loaders/Loading';
@@ -28,9 +29,6 @@ const AUTH_GRANT = {
 
 const styles = theme => ({
   root: {
-    flexGrow: 1,
-  },
-  grow: {
     flexGrow: 1,
   },
   appFrame: {
@@ -65,21 +63,19 @@ class MainLayout extends Component {
     isDrawerOpen: false,
   };
 
-  componentDidMount() {
+  componentDidMount = async () => {
     this.setState({ isLoading: true });
-    authClient
-      .silentAuth()
-      .then(() => {
-        this.setState({
-          isAuthenticated: true,
-          isLoading: false,
-        });
-      })
-      .catch(() => {
-        this.setState({
-          isLoading: false,
-        });
+    try {
+      await authClient.silentAuth();
+      this.setState({
+        isAuthenticated: true,
+        isLoading: false,
       });
+    } catch (error) {
+      this.setState({
+        isLoading: false,
+      });
+    }
   }
 
   handleClick = access => () => {
@@ -119,26 +115,33 @@ class MainLayout extends Component {
               position="absolute"
               className={classNames(classes.appBar, classes[`appBar-${anchor}`])}
             >
-              <Toolbar>
-                <IconButton
-                  color="inherit"
-                  aria-label="Open drawer"
-                  onClick={this.toggleDrawer({ isDrawerOpen: true })}
-                  className={classes.menuButton}
-                >
-                  <MenuIcon />
-                </IconButton>
-                <Typography
-                  className={classes.grow}
-                  variant="title"
-                  color="inherit"
-                  noWrap
-                >
-                  Device Dashboard
-              </Typography>
-                <Button color="inherit" onClick={this.handleClick(access)}>
-                  {authenticated}
-                </Button>
+              <Toolbar disableGutters>
+                <Grid alignItems="center" justify="center" direction="row" container className={classes.root} spacing={8}>
+                  <Grid item xs={5} >
+                    <IconButton
+                      color="inherit"
+                      aria-label="Open drawer"
+                      onClick={this.toggleDrawer({ isDrawerOpen: true })}
+                      className={classes.menuButton}
+                    >
+                      <MenuIcon />
+                    </IconButton>
+                  </Grid>
+                  <Grid item xs={6} >
+                    <Button
+                      align="center"
+                      size="large"
+                      color="inherit"
+                      component={Link}
+                      to="/"
+                    >
+                      Device Dashboard
+                  </Button>
+                  </Grid>
+                  <Button color="inherit" onClick={this.handleClick(access)}>
+                    {authenticated}
+                  </Button>
+                </Grid>
               </Toolbar>
             </AppBar>
             {drawer}
