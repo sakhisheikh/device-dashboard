@@ -35,9 +35,11 @@ class Home extends Component {
 
   handleChange = event => {
     const eventVal = event.target.value.trim();
-    setTimeout(() => {
+    clearTimeout(this.inputTimer);
+    // simple implementation of a "debounce" function, queuing exression for 500ms
+    this.inputTimer = setTimeout(() => {
       this.setState({ inputValue: eventVal });
-    }, 1000);
+    }, 500);
   };
 
   onUpdateList = (name, checked) => {
@@ -102,7 +104,6 @@ class Home extends Component {
               >
                 {({ filterReadings }) => (
                   <Readings
-                    onUpdateReadingCount={this.onUpdateReadingCount}
                     onUpdateList={this.onUpdateList}
                     {...{ inputValue, filterReadings }}
                   />

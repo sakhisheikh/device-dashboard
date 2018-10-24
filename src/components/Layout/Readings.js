@@ -28,22 +28,14 @@ class Readings extends Component {
   };
 
   onUpdateToggleStatus = async (name, checked) => {
-    const { filterReadings } = this.props;
-    const { onUpdateReadingCount, onUpdateList } = this.props;
+    const { onUpdateList } = this.props;
     try {
       this.setState({ isLoading: name });
       const result = await DEVICE.toggleDeviceStatus({
         readingName: name,
         stateValue: checked,
       });
-      const list = filterReadings.map(reading => {
-        if (reading.name === name) {
-          return { ...reading, active: checked };
-        }
-        return reading;
-      });
       onUpdateList(name, checked);
-      onUpdateReadingCount(list);
       this.setState({
         isLoading: '',
         isSnackbarOpen: true,

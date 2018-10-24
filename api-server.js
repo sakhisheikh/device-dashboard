@@ -129,7 +129,8 @@ function patchDeviceReading(req, res) {
     return res
       .send(400, {
         success: false,
-        message: 'Query Param Active Flag Can Only Be true/false [case sensitive]',
+        message:
+          'Query Param Active Flag Can Only Be true/false [case sensitive]',
       })
       .end();
   }
@@ -144,7 +145,9 @@ function patchDeviceReading(req, res) {
         })
         .end();
     }
-    const targetIndex = deviceReadings.findIndex(el => el.name === params.readingName);
+    const targetIndex = deviceReadings.findIndex(
+      el => el.name === params.readingName,
+    );
     // console.log('Target Index Is', targetIndex);
     if (targetIndex < 0) {
       // Not Found

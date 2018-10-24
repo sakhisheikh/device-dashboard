@@ -8,6 +8,7 @@ import {
   labelStyling,
   lineCoordinatesStyling,
   initializeMap,
+  darkMapStyles,
 } from '../../utils/Constants';
 
 class Map extends Component {
@@ -33,6 +34,7 @@ class Map extends Component {
         ref="map"
         defaultCenter={new google.maps.LatLng(52.511991, 13.383959)}
         defaultOptions={{
+          styles: darkMapStyles,
           gestureHandling: 'greedy',
           streetViewControl: false,
           scaleControl: false,
